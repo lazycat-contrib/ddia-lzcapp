@@ -8,3 +8,6 @@ dist/
 # Editors
 .DS_Store
 *.swp
+# Hugo build cache
+resources/
+.hugo_build.lock
