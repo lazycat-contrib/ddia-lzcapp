@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Set the directory containing Markdown files
+SCRIPT_DIR=$(dirname "$0")
+INPUT_DIR=$(cd "$(dirname "$SCRIPT_DIR")" && pwd)
+OUTPUT_DIR="$INPUT_DIR/output"
+
+# Create output directory if it doesn't exist
+mkdir -p "$OUTPUT_DIR"
+TEMP_DIR=$(mktemp -d "$OUTPUT_DIR/temp.XXXXXX")
+trap 'rm -rf -- "$TEMP_DIR"' EXIT
+
+# Preprocess Markdown files to convert Hugo shortcodes
+echo "Preprocessing Markdown files..."
+python3 "${SCRIPT_DIR}/preprocess-epub.py" "${INPUT_DIR}/content/zh" "$TEMP_DIR"
+book_inputs=()
+while IFS= read -r filename; do
+	book_inputs+=("${TEMP_DIR}/${filename}")
+done < <(python3 "${SCRIPT_DIR}/preprocess-epub.py" --print-order)
+
+convert_to_epub() {
+	# convert all EPUB files into a single EPUB book
+	local output_book="$OUTPUT_DIR/ddia.epub"
+	rm -f "$output_book"
+	echo "Converting all EPUB files into $output_book..."
+
+	local meta_file=${INPUT_DIR}/metadata.yaml
+	local css_file=${INPUT_DIR}/js/epub.css
+
+	pandoc -o "$output_book" --metadata-file="$meta_file" \
+		--toc-depth=3 \
+		--top-level-division=chapter \
+		--split-level=1 \
+		--css="$css_file" \
+		--mathml \
+		--resource-path="$INPUT_DIR" \
+		--wrap=preserve \
+		"${book_inputs[@]}"
+
+	echo "Converted EPUB book created at $output_book."
+}
+
+convert_to_epub

@@ -1,0 +1,15 @@
+package: cloud.lazycat.app.ddia
+version: 1.0.0
+name: 设计数据密集型应用
+description: "DDIA 中文版：数据密集型应用系统设计（第二版）在线书籍"
+min_os_version: "1.5.0"
+homepage: https://github.com/Vonng/ddia
+author: Vonng
+license: CC BY-NC-SA 3.0
+locales:
+  zh:
+    name: 设计数据密集型应用
+    description: "DDIA 中文版：数据密集型应用系统设计（第二版）在线书籍"
+  en:
+    name: Designing Data-Intensive Applications
+    description: "DDIA Chinese edition: Designing Data-Intensive Applications (2nd edition) online book"
