@@ -1,5 +1,5 @@
 package: cloud.lazycat.app.ddia
-version: 1.0.0
+version: 1.0.1
 name: 设计数据密集型应用
 description: "DDIA 中文版：数据密集型应用系统设计（第二版）在线书籍"
 min_os_version: "1.5.0"
