@@ -5,7 +5,7 @@ description: "DDIA 中文版：数据密集型应用系统设计（第二版）�
 min_os_version: "1.5.0"
 homepage: https://github.com/Vonng/ddia
 author: Vonng
-license: CC BY-NC-SA 3.0
+license: CC-BY-4.0
 locales:
   zh:
     name: 设计数据密集型应用
